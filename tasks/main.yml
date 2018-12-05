@@ -1,0 +1,29 @@
+---
+# tasks file for oracle-jdk-role
+- name: create dirs
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: root
+    group: root
+  with_items:
+    - '{{ jdk.installdir }}'
+
+- name: download jdk
+  unarchive:
+    src: '{{ jdk.download_url }}'
+    dest: '{{ jdk.installdir }}'
+    creates: '{{ jdk.installdir }}/bin/java'
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+
+- name: manage jdk alternatives
+  alternatives:
+    name: jdk
+    link: '{{ jdk.jdkroot }}'
+    path: '{{ jdk.installdir }}'
+
+- name: add jdkpath to path
+  template:
+    src: templates/jdk.sh
+    dest: /etc/profile.d/jdk.sh

@@ -1,0 +1,4 @@
+---
+# defaults file for oracle-jdk-role
+jdk_conf:
+  version: '8u144'
