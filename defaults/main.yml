@@ -1,4 +1,4 @@
 ---
 # defaults file for oracle-jdk-role
 jdk_conf:
-  version: '9'
+  version: '9_'
