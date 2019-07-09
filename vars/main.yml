@@ -3,4 +3,4 @@
 jdk:
   jdkroot: '/opt/jdk'
   installdir: '/usr/share/jdk-{{ jdk_conf.version }}'
-  download_url: 'https://build.funtoo.org/distfiles/oracle-java/jdk-{{ jdk_conf.version }}_linux-x64_bin.tar.gz'
+  download_url: 'https://download.java.net/java/GA/jdk{{ jdk_conf.version }}/{{ jdk_conf.version }}/binaries/openjdk-{{ jdk_conf.version }}_linux-x64_bin.tar.gz'
