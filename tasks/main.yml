@@ -9,13 +9,28 @@
   with_items:
     - '{{ jdk.installdir }}'
 
-- name: download jdk
+- name: check if local jdk install exists
+  stat:
+    path: /tmp/jdk_installer.zip
+  register: jdkinstaller
+
+- name: download jdk(local)
+  unarchive:
+    src: '/tmp/jdk_installer.zip'
+    dest: '{{ jdk.installdir }}'
+    creates: '{{ jdk.installdir }}/bin/java'
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+  when: jdkinstaller.stat.exists == True
+
+- name: install jdk(remote)
   unarchive:
     src: '{{ jdk.download_url }}'
     dest: '{{ jdk.installdir }}'
     creates: '{{ jdk.installdir }}/bin/java'
     extra_opts: [--strip-components=1]
     remote_src: yes
+  when: jdkinstaller.stat.exists == False
 
 - name: manage jdk alternatives
   alternatives:
